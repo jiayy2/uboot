@@ -6,6 +6,7 @@
 obj-y	+= soc.o
 obj-$(CONFIG_CPU_V7A) += clock.o pinmux.o power.o system.o
 obj-$(CONFIG_ARM64)	+= mmu-arm64.o
+obj-$(CONFIG_EXYNOS4X12) += exynos4x12_tools.o
 
 obj-$(CONFIG_EXYNOS5420)	+= sec_boot.o
 
