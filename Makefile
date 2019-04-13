@@ -6,6 +6,9 @@ SUBLEVEL =
 EXTRAVERSION =
 NAME =
 
+ARCH := arm
+CROSS_COMPILE := arm-eabi-
+
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
 # More info can be located in ./README
@@ -913,9 +916,9 @@ cmd_pad_cat = $(cmd_objcopy) && $(append) || rm -f $@
 
 cfg: u-boot.cfg
 
-quiet_cmd_cfgcheck = CFGCHK  $2
-cmd_cfgcheck = $(srctree)/scripts/check-config.sh $2 \
-		$(srctree)/scripts/config_whitelist.txt $(srctree)
+#quiet_cmd_cfgcheck = CFGCHK  $2
+#cmd_cfgcheck = $(srctree)/scripts/check-config.sh $2 \
+#		$(srctree)/scripts/config_whitelist.txt $(srctree)
 
 all:		$(ALL-y)
 ifeq ($(CONFIG_DM_I2C_COMPAT)$(CONFIG_SANDBOX),y)
