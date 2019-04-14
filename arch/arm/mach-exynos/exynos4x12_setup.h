@@ -227,28 +227,28 @@
 
 /* SCLK_MMC[0-4] = MOUTMMC[0-4]/(MMC[0-4]_RATIO + 1)/(MMC[0-4]_PRE_RATIO +1) */
 /* CLK_DIV_FSYS1 */
-#define MMC0_RATIO		    0x7
-#define MMC0_PRE_RATIO		0x4
-#define MMC1_RATIO		    0x7
-#define MMC1_PRE_RATIO		0x4
+#define MMC0_RATIO		    0x3
+#define MMC0_PRE_RATIO		0x3
+#define MMC1_RATIO		    0x3
+#define MMC1_PRE_RATIO		0x3
 #define CLK_DIV_FSYS1_VAL	((MMC1_PRE_RATIO << 24) \
         | (MMC1_RATIO << 16) \
         | (MMC0_PRE_RATIO << 8) \
         | (MMC0_RATIO << 0))
 
 /* CLK_DIV_FSYS2 */
-#define MMC2_RATIO		    0x7
-#define MMC2_PRE_RATIO		0x4
-#define MMC3_RATIO		    0x7
-#define MMC3_PRE_RATIO		0x4
+#define MMC2_RATIO		    0x3
+#define MMC2_PRE_RATIO		0x9
+#define MMC3_RATIO		    0x3
+#define MMC3_PRE_RATIO		0x3
 #define CLK_DIV_FSYS2_VAL	((MMC3_PRE_RATIO << 24) \
         | (MMC3_RATIO << 16) \
         | (MMC2_PRE_RATIO << 8) \
         | (MMC2_RATIO << 0))
 
 /* CLK_DIV_FSYS3 */
-#define MMC4_RATIO		    0x7
-#define MMC4_PRE_RATIO		0x4
+#define MMC4_RATIO		    0x3
+#define MMC4_PRE_RATIO		0x9
 #define CLK_DIV_FSYS3_VAL	((MMC4_PRE_RATIO << 8) \
         | (MMC4_RATIO << 0))
 

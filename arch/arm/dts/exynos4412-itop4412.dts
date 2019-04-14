@@ -13,4 +13,26 @@
         status = "okay";
     };
 
+    //MMC
+    sdhci@12530000 {
+        samsung,bus-width = <4>;
+        samsung,timing = <1 2 3>;
+        cd-gpios = <&gpk2 2 0>;
+        status = "okay";
+    };
+    dwmmc@12550000 {
+        samsung,bus-width = <8>;
+        samsung,timing = <2 1 0>;
+        samsung,removable = <0>;
+        fifoth_val = <0x203f0040>;
+        bus_hz = <400000000>;
+        div = <0x3>;
+        index = <4>;
+        status = "okay";
+    };
+    emmc-reset {
+        compatible = "samsung,emmc-reset";
+        reset-gpio = <&gpk1 2 0>;
+    };
+
 };

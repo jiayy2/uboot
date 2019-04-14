@@ -8,6 +8,7 @@
 #include <asm/gpio.h>
 #include <asm/arch/cpu.h>
 #include <asm/arch/mmc.h>
+#include <asm/arch/clk.h>
 #include <asm/arch/periph.h>
 #include <asm/arch/pinmux.h>
 #include <usb.h>
@@ -19,7 +20,13 @@ u32 get_board_rev(void)
 
 int exynos_init(void)
 {
-	return 0;
+    /**
+     * 配置MMC时钟
+     */
+    set_mmc_clk(2, 0x4);
+    set_mmc_clk(4, 0x2);
+
+    return 0;
 }
 
 int board_usb_init(int index, enum usb_init_type init)

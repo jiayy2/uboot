@@ -851,9 +851,8 @@ static void exynos4_set_mmc_clk(int dev_index, unsigned int div)
 	} else if (dev_index == 4) {
 		addr = (unsigned int)&clk->div_fsys3;
 		dev_index -= 4;
-		/* MMC4 is controlled with the MMC4_RATIO value */
-		clear_bit = MASK_RATIO(dev_index);
-		set_bit = SET_RATIO(dev_index, div);
+		clear_bit = MASK_PRE_RATIO(dev_index);
+		set_bit = SET_PRE_RATIO(dev_index, div);
 	} else {
 		addr = (unsigned int)&clk->div_fsys2;
 		dev_index -= 2;
