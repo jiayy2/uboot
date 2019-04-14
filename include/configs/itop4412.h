@@ -31,6 +31,10 @@
 /*stack*/
 #define CONFIG_SYS_INIT_SP_ADDR		0x02040000
 
+/*SDRAM init*/
+#define CONFIG_MIU_4KBIT_INTERLEAVED
+#define DRAM_CLK_400
+
 
 /**
  * 环境变量相关的配置

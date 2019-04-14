@@ -425,5 +425,173 @@
         | (VPLL_MFR << 16) \
         | (VPLL_K << 0))
 
+/**
+ * 内存配置信息
+ */
+#define DIRECT_CMD_CHIP1_SHIFT  (1 << 20)
+#define MEM_TIMINGS_MSR_COUNT   5
+
+
+struct mem_timings {
+    unsigned direct_cmd_msr[MEM_TIMINGS_MSR_COUNT];
+    unsigned timingref;
+    unsigned timingrow;
+    unsigned timingdata;
+    unsigned timingpower;
+    unsigned zqcontrol;
+    unsigned control0;
+    unsigned control1;
+    unsigned control2;
+    unsigned concontrol;
+    unsigned prechconfig;
+    unsigned memcontrol;
+    unsigned memconfig0;
+    unsigned memconfig1;
+    unsigned dll_resync;
+    unsigned dll_on;
+};
+
+#ifdef CONFIG_MIU_4KBIT_INTERLEAVED
+#define APB_SFR_INTERLEAVE_CONF_VAL     0x8000000c  /*内存交错*/
+#endif
+
+#ifdef CONFIG_MIU_64KBIT_INTERLEAVED
+#define APB_SFR_INTERLEAVE_CONF_VAL     0x80000010  /*内存交错*/
+#endif
+
+#define CTRL_ZQ_MODE_NOTERM     (0x1 << 0)
+#define CTRL_ZQ_START           (0x1 << 1)
+#define CTRL_ZQ_DIV             (0x0 << 4)
+#define CTRL_ZQ_MODE_DDS        (0x7 << 8)
+#define CTRL_ZQ_MODE_TERM       (0x2 << 11)
+#define CTRL_ZQ_FORCE_IMPN      (0x5 << 14)
+#define CTRL_ZQ_FORCE_IMPP      (0x2 << 17)
+#define CTRL_DCC                (0xE38 << 20)
+#define ZQ_CONTROL_VAL          (CTRL_ZQ_MODE_NOTERM | CTRL_ZQ_START \
+        | CTRL_ZQ_DIV | CTRL_ZQ_MODE_DDS \
+        | CTRL_ZQ_MODE_TERM | CTRL_ZQ_FORCE_IMPN \
+        | CTRL_ZQ_FORCE_IMPP | CTRL_DCC)
+
+#define CTRL_START_EN      (1 << 0)
+#define CTRL_DLL_ON_EN     (1 << 1)
+#define DLL_CONTROL_ON      1
+
+#define CTRL_START      (0 << 0)
+#define CTRL_DLL_ON     (0 << 1)
+#define CTRL_HALF       (0 << 2)
+#define CTRL_DFDQS      (1 << 3)
+#define DQS_DELAY       (0 << 4)
+#define CTRL_START_POINT    (0x10 << 8)
+#define CTRL_INC            (0x10 << 16)
+#define CTRL_FORCE          (0x0 << 24)
+#define CONTROL0_VAL        (CTRL_START | CTRL_DLL_ON | CTRL_HALF \
+        | CTRL_DFDQS | DQS_DELAY | CTRL_START_POINT \
+        | CTRL_INC | CTRL_FORCE)
+
+#define FORCE_DLL_RESYNC	3
+
+#define CTRL_SHIFTC     (6 << 0)
+#define CTRL_REF        (4 << 4)
+#define CTRL_SHGATE     (1 << 29)
+#define TERM_READ_EN    (1 << 30)
+#define TERM_WRITE_EN   (1 << 31)
+#define CONTROL1_VAL    (CTRL_SHIFTC | CTRL_REF | CTRL_SHGATE \
+        | TERM_READ_EN | TERM_WRITE_EN)
+
+#define CONTROL2_VAL         0x00000000
+
+
+#define AREF_ON                 (1 << 5)
+
+#define CLK_RATIO               (1 << 1)
+#define IO_PD_CON               (1 << 3)
+#define PDN_DQ                  (0 << 4)
+#define AREF_EN                 (0 << 5)
+#define DRV_TYPE     		    (2 << 6)
+#define CHIP0_NOT	            (0 << 8)
+#define CHIP1_NOT               (0 << 9)
+#define DQ_SWAP        			(0 << 10)
+#define QOS_FAST_EN		        (0 << 11)
+#define RD_FETCH                (0x3 << 12)
+#define TIMEOUT_LEVEL0          (0xFFF << 16)
+#define CONCONTROL_VAL          (CLK_RATIO | IO_PD_CON | PDN_DQ \
+        | AREF_EN | DRV_TYPE \
+        | CHIP0_NOT | CHIP1_NOT \
+        | DQ_SWAP | QOS_FAST_EN \
+        | RD_FETCH | TIMEOUT_LEVEL0)
+
+
+#define MEMCONTROL_END      (1 | 2 | (1 << 4) | (1 << 24))
+#define CLK_STOP_ON		    (0 << 0)
+#define DPWRDN_ON		    (0 << 1)
+#define DPWRDN_TYPE         (0 << 2)
+#define TP_EN		        (0 << 4)
+#define DSREF_EN        	(0 << 5)
+#define ADD_LAT_PALL        (0 << 6)
+#define MEM_TYPE	        (6 << 8)
+#define MEM_WIDTH	        (2 << 12)
+#define NUM_CHIP            (0 << 16)
+#define BL                  (3 << 20)
+#define MEMCONTROL_VAL      (CLK_STOP_ON | DPWRDN_ON \
+        | DPWRDN_TYPE | TP_EN | DSREF_EN \
+        | ADD_LAT_PALL | MEM_TYPE | MEM_WIDTH \
+        | NUM_CHIP | BL)
+
+
+#define CHIP_BANK               (0x3 << 0)	/*4个逻辑bank*/
+#if CONFIG_SDRAM_SIZE == 1
+#define CHIP_ROW				(0x2 << 4)	/*14根行地址线*/
+#else
+#define CHIP_ROW				(0x3 << 4)
+#endif
+#define CHIP_COL                (0x3 << 8)    /*10根列地址线*/
+#define CHIP_MAP    			(0x1 << 12)
+#if CONFIG_SDRAM_SIZE == 1
+#define CHIP_MASK               (0xC0 << 16)
+#define CHIP0_BASE              (0x40 << 24)
+#define CHIP1_BASE              (0x60 << 24)
+#else
+#define CHIP_MASK               (0x80 << 16)
+#define CHIP0_BASE              (0x40 << 24)
+#define CHIP1_BASE              (0x80 << 24)
+#endif
+
+#define MEMCONFIG0_VAL          (CHIP_BANK | CHIP_ROW | CHIP_COL\
+        | CHIP_MAP | CHIP_MASK | CHIP0_BASE)
+#define MEMCONFIG1_VAL          (CHIP_BANK | CHIP_ROW | CHIP_COL\
+        | CHIP_MAP | CHIP_MASK | CHIP1_BASE)
+
+
+#define TP_CNT                  (0x64 << 24)
+#define PRECHCONFIG             TP_CNT
+
+#ifdef  CONFIG_CLK_200
+#define TIMINGREF_VAL           0x000000BB
+#define TIMINGROW_VAL           0x4046654f
+#define TIMINGDATA_VAL          0x46400506
+#define TIMINGPOWER_VAL         0x52000A3C
+#endif
+
+#ifdef DRAM_CLK_330
+#define TIMINGREF_VAL           0x000000BC
+#define TIMINGROW_VAL           0x3545548d
+#define TIMINGDATA_VAL          0x45430506
+#define TIMINGPOWER_VAL         0x4439033c
+#endif
+
+#ifdef DRAM_CLK_400
+#define TIMINGREF_VAL           0x000000BB
+#define TIMINGROW_VAL           0x7846654F
+#define TIMINGDATA_VAL          0x46400506
+#define TIMINGPOWER_VAL         0x52000A3C
+#endif
+
+#define DIRECT_CMD_NOP          0x07000000
+#define DIRECT_CMD1             0x00020000
+#define DIRECT_CMD2             0x00030000
+#define DIRECT_CMD3             0x00010000
+#define DIRECT_CMD4             0x00000100
+#define DIRECT_CMD5             0x00000428
+#define DIRECT_CMD_ZQ           0x0A000000
 
 #endif
