@@ -2,11 +2,15 @@
 #include "exynos4x12.dtsi"
 
 / {
-	model = "iTOP-4412 based on Exynos4412";
-	compatible = "samsung,itop4412", "samsung,exynos4412";
+    model = "iTOP-4412 based on Exynos4412";
+    compatible = "samsung,itop4412", "samsung,exynos4412";
 
-	aliases {
-
-	};
+    aliases {
+        serial0 = "/serial@13820000";
+        console = "/serial@13820000";
+    };
+    serial@13820000{
+        status = "okay";
+    };
 
 };
