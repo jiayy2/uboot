@@ -42,6 +42,11 @@
 #define CONFIG_ENV_SIZE             (16 << 10) /* 16k */
 #define CONFIG_SYS_MMC_ENV_DEV		0
 
+#define CONFIG_EXTRA_ENV_SETTINGS \
+    "ipaddr=192.168.20.8\0" \
+    "serverip=192.168.20.120\0" \
+    "gatewayip=192.168.20.2\0"
+
 
 /**
  * SPL相关配置信息
