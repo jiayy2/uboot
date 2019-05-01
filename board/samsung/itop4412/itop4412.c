@@ -26,6 +26,12 @@ int exynos_init(void)
     set_mmc_clk(2, 0x4);
     set_mmc_clk(4, 0x2);
 
+    /**
+     * 配置USB驱动
+     */
+    gpio_request(EXYNOS4X12_GPIO_M33, "USB3503A Connect");
+    gpio_request(EXYNOS4X12_GPIO_M24, "USB3503A Reset");
+
     return 0;
 }
 

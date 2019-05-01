@@ -67,4 +67,9 @@
 #define S5P_CHECK_DIDLE			0xBAD00000
 #define S5P_CHECK_LPA			0xABAD0000
 
+/**
+ * 启动USB支持
+ */
+#define CONFIG_USB_EHCI_EXYNOS
+
 #endif	/* __CONFIG_H */
