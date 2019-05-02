@@ -45,7 +45,25 @@
 #define CONFIG_EXTRA_ENV_SETTINGS \
     "ipaddr=192.168.20.8\0" \
     "serverip=192.168.20.120\0" \
-    "gatewayip=192.168.20.2\0"
+    "gatewayip=192.168.20.2\0" \
+    "netmask=255.255.255.0\0" \
+    "hostname=uboot\0" \
+    "bootdelay=5\0" \
+    "loadaddr=0x40008000\0" \
+    "dtbaddr=0x44000000\0" \
+    "dtbname=exynos4412-itop4412.dtb\0" \
+    "rdiskaddr=0x50000000\0" \
+    "rdiskname=ramdiskfs\0" \
+    "bootargs=initrd=0x50000040,0x4100000 root=/dev/ram rw init=/linuxrc console=ttySAC2,115200 earlyprintk\0"
+
+#define CONFIG_BOOTCOMMAND \
+    "usb reset;usb reset;" \
+    "tftpboot ${loadaddr} uImage;" \
+    "tftpboot ${dtbaddr} ${dtbname};" \
+    "tftpboot ${rdiskaddr} ${rdiskname};" \
+    "bootm ${loadaddr} ${rdiskaddr}  ${dtbaddr};"
+
+#define CONFIG_SYS_BOOTM_LEN 0x4000000
 
 
 /**
